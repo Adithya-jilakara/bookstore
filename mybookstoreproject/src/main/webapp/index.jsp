@@ -1,4 +1,7 @@
 <%@ page import="com.booknest.model.User"%>
+<%
+User user = (User) session.getAttribute("user");
+%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -54,6 +57,7 @@ body {
 .nav-link:hover {
 	color: #ff6a00 !important;
 }
+
 /* SEARCH BAR */
 .search-box {
 	width: 460px;
@@ -61,7 +65,6 @@ body {
 	margin-right: 25px;
 }
 
-/* SEARCH INPUT GROUP */
 .search-group input {
 	border-right: 0;
 }
@@ -158,8 +161,9 @@ body {
 	text-align: center;
 }
 
+/* FIXED WARNING */
 .dropdown-menu {
-	background: E6E9EB;
+	background: #E6E9EB;
 	right: auto;
 	left: 0;
 }
@@ -169,12 +173,9 @@ body {
 
 <body>
 
-	<!-- HEADER -->
 	<nav class="navbar navbar-expand-lg">
 
 		<div class="container-fluid">
-
-			<!-- LOGO -->
 
 			<a class="navbar-brand" href="index.jsp"> <img
 				src="images/bookstorelogo.png">
@@ -187,29 +188,16 @@ body {
 
 			<div class="collapse navbar-collapse" id="navMenu">
 
-				<!-- CATEGORY MENU -->
-
 				<ul class="navbar-nav">
 
 					<li class="nav-item"><a class="nav-link" href="#">Books</a></li>
-
-					<li class="nav-item"><a class="nav-link" href="#">Categories</a>
-					</li>
-
-					<li class="nav-item"><a class="nav-link" href="#">Authors</a>
-					</li>
-
-					<li class="nav-item"><a class="nav-link" href="#">Publishers</a>
-					</li>
-
+					<li class="nav-item"><a class="nav-link" href="#">Categories</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Authors</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Publishers</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Stores</a></li>
-
-					<li class="nav-item"><a class="nav-link" href="#">Reviews</a>
-					</li>
+					<li class="nav-item"><a class="nav-link" href="#">Reviews</a></li>
 
 				</ul>
-
-				<!-- SEARCH BAR -->
 
 				<form action="SearchBookServlet" method="get" class="search-box">
 
@@ -226,48 +214,60 @@ body {
 
 				</form>
 
-
-
-				<!-- RIGHT ICONS -->
-
 				<div class="nav-icons">
-					<!-- PROFILE -->
+
+					<!-- PROFILE ICON ALWAYS PRESENT -->
 
 					<div class="dropdown">
 
-						<button class="dropdown-toggle" data-bs-toggle="dropdown">
-							<i class="fa fa-user"></i>
+						<button class="btn" data-bs-toggle="dropdown">
+							<i class="fa fa-user-circle" style="font-size: 22px;"></i>
 						</button>
 
 						<ul class="dropdown-menu">
 
 							<%
-							User user = (User) session.getAttribute("user");
-
 							if (user == null) {
 							%>
 
-							<li><a class="dropdown-item" href="loginCustomer.jsp">
-									Login </a></li>
+							<li><a class="dropdown-item" href="loginCustomer.jsp"> <i
+									class="fa fa-sign-in-alt"></i> Login
+							</a></li>
 
 							<li><a class="dropdown-item" href="registerCustomer.jsp">
-									Register </a></li>
+									<i class="fa fa-user-plus"></i> Register as Customer
+							</a></li>
+							<li><a class="dropdown-item" href="registerSeller.jsp">
+									<i class="fa fa-user-plus"></i> Register as seller
+							</a></li>
 
 							<%
 							} else {
 							%>
 
-							<li class="dropdown-item">Hello <b><%=user.getName()%></b>
+							<li class="dropdown-item-text">Hello <strong><%=user.getName()%></strong>
 							</li>
 
 							<li><hr class="dropdown-divider"></li>
 
-							<li><a class="dropdown-item" href="#"> My Profile </a></li>
+							<li><a class="dropdown-item" href="#"> <i
+									class="fa fa-user"></i> My Profile
+							</a></li>
 
-							<li><a class="dropdown-item" href="#"> My Orders </a></li>
+							<li><a class="dropdown-item" href="#"> <i
+									class="fa fa-box"></i> My Orders
+							</a></li>
 
-							<li><a class="dropdown-item" href="LogoutServlet">
-									Logout </a></li>
+							<li><a class="dropdown-item" href="#"> <i
+									class="fa fa-heart"></i> Wishlist
+							</a></li>
+
+							<li><hr class="dropdown-divider"></li>
+
+							<li><a class="dropdown-item text-danger"
+								href="LogoutCustomer"> <i class="fa fa-sign-out-alt"></i>
+									Logout
+							</a></li>
 
 							<%
 							}
@@ -277,15 +277,11 @@ body {
 
 					</div>
 
-					<!-- WISHLIST -->
-
 					<form action="WishlistServlet" method="get">
 						<button type="submit">
 							<i class="fa fa-heart"></i>
 						</button>
 					</form>
-
-					<!-- CART -->
 
 					<form action="CartServlet" method="get">
 						<button type="submit">
@@ -301,17 +297,12 @@ body {
 
 	</nav>
 
-
-
-
 	<!-- HERO CAROUSEL -->
 
 	<div id="heroCarousel" class="carousel slide hero"
 		data-bs-ride="carousel">
 
 		<div class="carousel-inner">
-
-			<!-- SLIDE 1 -->
 
 			<div class="carousel-item active">
 
@@ -329,8 +320,6 @@ body {
 
 			</div>
 
-			<!-- SLIDE 2 -->
-
 			<div class="carousel-item">
 
 				<img src="images/bookimg3.jpg" class="d-block w-100">
@@ -345,8 +334,6 @@ body {
 				</div>
 
 			</div>
-
-			<!-- SLIDE 3 -->
 
 			<div class="carousel-item">
 
@@ -365,16 +352,12 @@ body {
 
 		</div>
 
-		<!-- LEFT ARROW -->
-
 		<button class="carousel-control-prev" type="button"
 			data-bs-target="#heroCarousel" data-bs-slide="prev">
 
 			<span class="carousel-control-prev-icon"></span>
 
 		</button>
-
-		<!-- RIGHT ARROW -->
 
 		<button class="carousel-control-next" type="button"
 			data-bs-target="#heroCarousel" data-bs-slide="next">
@@ -396,11 +379,8 @@ body {
 			<div class="col-md-3">
 
 				<form action="CategoryServlet">
-
 					<input type="hidden" name="category" value="Fiction">
-
 					<button class="category-box">Fiction</button>
-
 				</form>
 
 			</div>
@@ -408,11 +388,8 @@ body {
 			<div class="col-md-3">
 
 				<form action="CategoryServlet">
-
 					<input type="hidden" name="category" value="Self Help">
-
 					<button class="category-box">Self Help</button>
-
 				</form>
 
 			</div>
@@ -420,11 +397,8 @@ body {
 			<div class="col-md-3">
 
 				<form action="CategoryServlet">
-
 					<input type="hidden" name="category" value="Technology">
-
 					<button class="category-box">Technology</button>
-
 				</form>
 
 			</div>
@@ -432,11 +406,8 @@ body {
 			<div class="col-md-3">
 
 				<form action="CategoryServlet">
-
 					<input type="hidden" name="category" value="History">
-
 					<button class="category-box">History</button>
-
 				</form>
 
 			</div>
@@ -454,111 +425,76 @@ body {
 		<div class="row g-4">
 
 			<div class="col-md-3">
-
 				<div class="book-card">
-
 					<div class="book-img">
-						<img src="images/atomichabits.jpeg"
+						<img src="images/penguin.jpg"
 							style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
 					</div>
-
-					<h5 class="mt-2">Atomic Habits</h5>
+					<h5 class="mt-2">Men without Women</h5>
 					<p>₹399</p>
 					<form action="CartServlet" method="post">
-
 						<input type="hidden" name="bookId" value="101">
-
 						<button class="btn btn-primary w-100">Add to Cart</button>
-
 					</form>
-
 				</div>
-
 			</div>
+
 			<div class="col-md-3">
-
 				<div class="book-card">
-
 					<div class="book-img">
 						<img src="images/a-brief-history-of-time.jpeg"
 							style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
 					</div>
-
 					<h5 class="mt-2">A Brief History Of Time</h5>
 					<p>₹282</p>
 					<form action="CartServlet" method="post">
-
 						<input type="hidden" name="bookId" value="101">
-
 						<button class="btn btn-primary w-100">Add to Cart</button>
-
 					</form>
-
 				</div>
-
 			</div>
+
 			<div class="col-md-3">
-
 				<div class="book-card">
-
 					<div class="book-img">
 						<img src="images/as-a-man-thinketh.jpeg"
 							style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
 					</div>
-
 					<h5 class="mt-2">As a man Thinketh</h5>
 					<p>₹125</p>
 					<form action="CartServlet" method="post">
-
 						<input type="hidden" name="bookId" value="101">
-
 						<button class="btn btn-primary w-100">Add to Cart</button>
-
 					</form>
-
 				</div>
-
 			</div>
+
 			<div class="col-md-3">
-
 				<div class="book-card">
-
 					<div class="book-img">
 						<img src="images/Wings-of-Fire.jpg"
 							style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
 					</div>
-
 					<h5 class="mt-2">Wings Of Fire</h5>
 					<p>₹182</p>
 					<form action="CartServlet" method="post">
-
 						<input type="hidden" name="bookId" value="101">
-
 						<button class="btn btn-primary w-100">Add to Cart</button>
-
 					</form>
-
 				</div>
-
 			</div>
 
 		</div>
 
 	</div>
 
-	<!-- FOOTER -->
-
 	<div class="footer">
-
 		<p>© 2026 BookNest</p>
-
 		<p>Your Home for Every Book</p>
-
 	</div>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-
 </html>
