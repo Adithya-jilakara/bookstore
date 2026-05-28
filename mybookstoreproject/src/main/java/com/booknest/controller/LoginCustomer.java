@@ -25,13 +25,42 @@ public class LoginCustomer extends HttpServlet {
 
 	        User user = dao.loginUser(email, password);
 
-	        if (user != null && user.getAccount_status().equals("ACTIVE")) {
+if(user == null){
+    System.out.println("User is NULL ❌");
+}else{
+    System.out.println("User FOUND ✅");
+    System.out.println("Role: " + user.getRole_id());
+    System.out.println("Status: " + user.getAccount_status());
+}
 
-	            HttpSession session = request.getSession();
+	        if (user != null && user.getAccount_status().trim().equalsIgnoreCase("ACTIVE")) {
+	        	
+	        	int role_id=user.getRole_id();
+	        	
+	        	if(role_id==1) {
+	        		HttpSession session = request.getSession();
 
-	            session.setAttribute("user", user);
+		            session.setAttribute("user", user);
 
-	            response.sendRedirect("index.jsp");
+		            response.sendRedirect("AdminDashboard");
+	        		
+	        	}
+	        	else if(role_id==2) {
+	        		HttpSession session = request.getSession();
+	        		session.setAttribute("sellerId", Integer.valueOf(user.getUser_id()));
+	        		session.setMaxInactiveInterval(30 * 60); // 30 min session
+		            session.setAttribute("user", user);
+
+		            response.sendRedirect("SellerDashboard");
+	        	}
+	        	else if(role_id==3) {
+	        		HttpSession session = request.getSession();
+
+		            session.setAttribute("user", user);
+
+		            response.sendRedirect("index.jsp");
+	        	}
+	            
 
 	        } 
 	        else {

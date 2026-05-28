@@ -15,6 +15,7 @@
 body {
 	background: #f5f5f6;
 	font-family: 'Segoe UI', sans-serif;
+	position: relative;
 }
 
 .register-container {
@@ -63,6 +64,17 @@ body {
 	text-align: center;
 	margin-bottom: 10px;
 }
+.btn-secondary{
+padding:6px 15px ;
+margin-top:5px;
+margin-left:5px;
+
+}
+.back-btn {
+	position: absolute;
+	top: 2px;
+	left: 10px;
+}
 </style>
 
 </head>
@@ -70,8 +82,11 @@ body {
 <body>
 
 	<div class="register-container">
+	         <a href="index.jsp" class="btn btn-secondary back-btn">⬅ Back to Home</a>
+	     
 
 		<div class="register-card">
+		    
 
 			<div class="logo">
 				<img src="images/bookstorelogo.png">
